@@ -4,43 +4,40 @@ using UnityEngine;
 
 public class NaveController : MonoBehaviour
 {
-    public float speed = 0.01f;
+    public float speed = 1f;
     private float _h, _v;
+
+    public GameObject prefabLaser;
+
+    private Rigidbody2D _rb2dBody;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _rb2dBody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        /*if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
+        _h = Input.GetAxisRaw("Horizontal");
+        _v = Input.GetAxisRaw("Vertical");
+
+        //print(Time.deltaTime);
+
+        //transform.Translate(_h*speed*Time.deltaTime,_v*speed*Time.deltaTime,0);
+
+        if (Input.GetMouseButtonDown(0))
         {
-            transform.Translate(0,speed,0);
+            Instantiate(prefabLaser, (transform.position + new Vector3(0,1,0)), Quaternion.identity);
         }
 
-        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(0, -speed, 0);
-        }
+    }
 
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(-speed, 0,0);
-        }
-
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(speed, 0, 0);
-        }*/
-
-        _h = Input.GetAxis("Horizontal");
-        _v = Input.GetAxis("Vertical");
-
-        transform.Translate(_h*speed,_v*speed,0);
-
+    void FixedUpdate()
+    {
+        print(Time.deltaTime);
+        _rb2dBody.velocity = new Vector2(_h * speed * Time.deltaTime, _v * speed * Time.deltaTime);
     }
 }
